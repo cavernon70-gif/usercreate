@@ -1,0 +1,13 @@
+---
+- name: user creation play
+  hosts: dev
+  tasks:
+   - name: group creation
+     group:
+       name: developer
+       state: present
+   - name: user creation
+     user:
+       name: john
+       groups: developer
+       state: present
