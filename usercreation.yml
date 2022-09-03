@@ -1,0 +1,16 @@
+---
+- name: user creation play
+  hosts: dev
+  vars_files:
+    user_list.yml
+  tasks:
+     - name: user creation on dev grou[
+       vars:
+         password: "{{lookup('password',item.name+' length=6')}}"
+       user:
+          uid: "{{ item.id }}"
+          name: "{{ item.name }}"
+          password: "{{ password | password_hash('sha512') }}"
+          comment: "{{ item.first|capitalize+' '+item.middle|capitalize+' '+item.last|capitalize }}"
+       loop: 
+         "{{ users }}"
